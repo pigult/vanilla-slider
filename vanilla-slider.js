@@ -63,7 +63,7 @@
         callback.call(group[i], i);
       }
     }
-  }
+  };
 
 
   /**
@@ -88,11 +88,11 @@
     this.slider = this.container.children[0];
     this.items = this.slider.children;
 
-    this.containerWidth = this.container.offsetWidth;
-    this.containerHeight = this.container.offsetHeight;
+    this.containerWidth = this.container.clientWidth;
+    this.containerHeight = this.container.clientHeight;
 
-    this.itemWidth = this.items[0].offsetWidth;
-    this.itemHeight = this.items[0].offsetHeight;
+    this.itemWidth = this.items[0].clientWidth;
+    this.itemHeight = this.items[0].clientHeight;
     this.itemMargin = 0;
 
     if (this.settings.direction === 'vertical') {
@@ -111,6 +111,21 @@
     if (this.settings.controlNext || this.settings.controlPrev) {
       this.addControls(this.settings.controlNext, this.settings.controlPrev, this.settings.steps);
     }
+
+    var that = this;
+
+    // Window resize listener for making slider items responsive
+    window.addEventListener("resize", function (event) {
+      if (that.settings.direction === 'vertical') {
+        that.containerDimension = that.container.clientHeight;
+        that.itemDimension = that.items[0].clientHeight;
+      } else {
+        that.containerDimension = that.container.clientWidth;
+        that.itemDimension = that.items[0].clientWidth;
+      }
+      that.slider.style.top = 0;
+      that.justifyItems();
+    });
   }
 
   // An alias for prototype
