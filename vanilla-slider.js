@@ -88,10 +88,10 @@
     this.slider = this.container.children[0];
     this.items = this.slider.children;
 
-    this.containerWidth = this.container.clientWidth;
+    this.containerWidth = this.container.offsetWidth;
     this.containerHeight = this.container.clientHeight;
 
-    this.itemWidth = this.items[0].clientWidth;
+    this.itemWidth = this.items[0].offsetWidth;
     this.itemHeight = this.items[0].clientHeight;
     this.itemMargin = 0;
 
@@ -119,12 +119,11 @@
       if (that.settings.direction === 'vertical') {
         that.containerDimension = that.container.clientHeight;
         that.itemDimension = that.items[0].clientHeight;
-      } else {
-        that.containerDimension = that.container.clientWidth;
-        that.itemDimension = that.items[0].clientWidth;
+        that.slider.style.top = 0;
+        if (that.settings.visibles > 1 && that.settings.justify) {
+          that.justifyItems();
+        }
       }
-      that.slider.style.top = 0;
-      that.justifyItems();
     });
   }
 
