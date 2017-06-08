@@ -85,6 +85,10 @@
 
     this.settings = utils.merge(DEFAULTS, options);
 
+    if (options.onMove){
+      this.onMove = options.onMove;
+    }
+
     this.slider = this.container.children[0];
     this.items = this.slider.children;
 
@@ -252,6 +256,10 @@
 
     if (this.isAtLimit(nextPos)) {
       return this;
+    }
+
+    if (this.onMove) {
+      this.onMove(nextPos);
     }
 
     this.slider.style[direction === 'vertical' ? 'top' : 'right'] = nextPos + 'px';
